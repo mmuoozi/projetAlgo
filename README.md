@@ -35,32 +35,36 @@ On simule, comme un premier essai, v un vecteur de taille n contenant tous les e
 n <- 10
 v <- sample(0:10, n, replace = TRUE)
 ```
-[1] 2 8 0 8 3 7 6 9 7 2
 
 Le vecteur qu'on doit trier:
 ```{r}
 v
 ```
+[1] 2 8 0 8 3 7 6 9 7 2
 Avec radix sort on obtient:
 
 ```{r}
 radixSort(v)
 ```
+ [1] 0 2 2 3 6 7 7 8 8 9
 avec radix sort implementé en Rcpp:
 
 ```{r}
 radix_sort_Rcpp(v)
 ```
+[1] 0 2 2 3 6 7 7 8 8 9
 avec heap sort:
 
 ```{r}
 heap_sort(v)
 ```
+[1] 0 2 2 3 6 7 7 8 8 9
 et avec heap sort implemnté en Rcpp:
 
 ```{r}
 heap_sort_Rcpp(v)
 ```
+[1] 0 2 2 3 6 7 7 8 8 9
 
 ## Les 4 algorithmes à une taille fixé
 
@@ -97,6 +101,11 @@ one.simu(v, func = "radix_sort_Rcpp")
 one.simu(v, func = "heap_sort_Rcpp")
 
 ```
+[1] 0.03
+[1] 0.47
+[1] 0.02
+[1] 0
+
 On peut noter de ces simulations que les algorithmes en Rcpp sont plus rapide que les algorithmes en R. On gagne un quantité de temps remarquable avec le heap sort en Rcpp qu'au lieu de celui en R.
 
 ## Simulations des nombres entiers
@@ -121,6 +130,10 @@ time2
 time3
 time4
 ```
+[1] 0.71
+[1] 4.33
+[1] 0.07
+[1] 0.02
 On remarque que heap sort en R est le plus lent alors que l’algorithme le plus rapide est le radix sort en Rcpp suivi du heap sort. Par contre, lors du premier essai, ces deux algorithmes avaient à peu pres la même performance.
 
 Calcul du gain en passant de R à Rcpp.
@@ -129,6 +142,8 @@ Calcul du gain en passant de R à Rcpp.
 time1/time3 #Radix Sort
 time2/time4 #Heap Sort
 ```
+[1] 10.14286
+[1] 216.5
 On remarque que le code est toujours plus rapide en Rcpp. Le radix sort en Rcpp est plus rapide qu’en R ainsi que le heap sort est beaucoup plus rapide (fois 141) en Rcpp.
 
 Calcul du gain de Radix sort par rapport à heap sort
@@ -137,11 +152,14 @@ Calcul du gain de Radix sort par rapport à heap sort
 time1/time2 #R
 time3/time4 #Rcpp
 ```
-
+[1] 0.1639723
+[1] 3.5
 ```{r}
 #max gain between radix R and heap sort Rcpp
 time1/time4
 ```
+[1] 35.5
+
 On note un gain de temps remarquable entre le heap sort en R et le heap sort en Rcpp.
 Dans tout les cas, le code en Rcpp est toujours plus rapide que le code en R et Le fait d’effectuer des nombreux simulations nous a permis de mieux comparer les algorithmes.
 
@@ -175,6 +193,10 @@ time2
 time3
 time4
 ```
+[1] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.06 0.06 0.10
+[1] 0.00 0.00 0.00 0.00 0.00 0.00 0.02 0.00 0.02 0.04 0.10 0.57
+[1] 0.06 0.02 0.07 0.00 0.02 0.05 0.03 0.04 0.05 0.06 0.02 0.00
+[1] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.04
 
 ```{r}
 length <- c(2, 2**2, 2**3, 2**4, 2**5, 2**6, 2**7, 2**8, 2**9, 2**10, 2**1, 2**12)
@@ -184,11 +206,12 @@ plot(time2, length, type = 'b', xlab = "time in seconds", ylab = "data length")
 plot(time3, length, type = 'b', xlab = "time in seconds", ylab = "data length")
 plot(time4, length, type = 'b', xlab = "time in seconds", ylab = "data length")
 ```
-
 ```{r}
 time1[12]/time3[12]
 time2[12]/time4[12]
 ```
+[1] 3.33
+[1] 14.25
 Radix sort est plus rapid en Rcpp que dans R. Ainsi que Heap Sort est plus rapid en Rcpp.
 
 Maintenant on considere les nombres plus grands et on evalue les performances de nos algorithmes.
@@ -224,6 +247,10 @@ time2
 time3
 time4
 ```
+[1] 10.14
+[1] 229.84
+[1] 0.15
+[1] 0.41
 
 On calcule le gain entre Radix et Heap Sort.
 ```{r}
@@ -231,6 +258,8 @@ On calcule le gain entre Radix et Heap Sort.
 time2/time1 #R
 time4/time3 #Rcpp
 ```
+[1] 22.66667
+[1] 2.733333
 
 On calcule le gain entre R et Rcpp
 ```{r}
@@ -238,6 +267,8 @@ On calcule le gain entre R et Rcpp
 time1/time3
 time2/time4
 ```
+[1] 67.6
+[1] 560.5854
 
 On remarque que Radix Sort dans Rcpp fonctionne le mieux, Heap Sort dans Rcpp le suit. Le pire algorithme est Heap Sort in R. En comparant, Radix Sort dans R est plus rapide que Heap Sort dans R, mais plus lent que Radix Sort dans Rcpp. Heap Sort dans Rcpp est plus lent que Radix Sort dans Rcpp, mais plus rapide que Heap Sort sur R.
 
@@ -268,6 +299,10 @@ time3
 time4
 
 ```
+[1] 0.02 0.01 0.04 0.32 3.26
+[1]  0.00  0.00  0.09  1.24 74.35
+[1] 0.03 0.04 0.00 0.00 0.07
+[1] 0.00 0.00 0.00 0.01 0.15
 
 ```{r}
 length <- c(10, 10**2, 10**3, 10**4, 10**5)
@@ -305,6 +340,11 @@ one.simu(n, type= "integer",  func = "heap_sort")
 one.simu(n, type= "decimal", func="radix_sort_decimal_Rcpp")
 one.simu(n, type= "integer",  func = "heap_sort_Rcpp")
 ```
+[1] 0.11
+[1] 0.31
+[1] 0
+[1] 0.02
+
 Le heap sort en R est toujours le plus lent tandis que le radix sort decimal est plus rapide. Les deux algorithmes en Rcpp ont la meme vitesse.
 
 On compare maintenant les performances des algorithmes pour une suite d’execution de 10 fois.
@@ -332,6 +372,11 @@ time2
 time3
 time4
 ```
+[1] 0.76
+[1] 4.41
+[1] 0.05
+[1] 0.04
+
 Apres plusieurs simulations on a toujours les memes resultats pour les fonctions en R mais cette fois on peut voir que radix sort en Rcpp est plus rapide que le heap sort en rcpp.
 
 ```{r}
@@ -339,6 +384,9 @@ Apres plusieurs simulations on a toujours les memes resultats pour les fonctions
 time1/time3 #RadixSort
 time2/time4 #HeapSort
 ```
+[1] 81
+[1] 204
+
 Radix est plus rapide en Rcpp que R, de meme pour le heap sort mais la diffrence de vitesse de heap sort est de 200 ce qui est remarquable.
 
 ```{r}
@@ -347,7 +395,8 @@ time2/time1
 time4/time3
 
 ```
-
+[1] 5.802632
+[1] 0.8
 
 # Microbenchmark
 On utilise dans cette partie les packages microbenchmark et ggplot2 afin de simuler plus profondement les algorithmes.
