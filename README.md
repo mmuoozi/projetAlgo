@@ -35,6 +35,7 @@ On simule, comme un premier essai, v un vecteur de taille n contenant tous les e
 n <- 10
 v <- sample(0:10, n, replace = TRUE)
 ```
+[1] 2 8 0 8 3 7 6 9 7 2
 
 Le vecteur qu'on doit trier:
 ```{r}
